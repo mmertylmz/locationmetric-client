@@ -157,10 +157,10 @@
 
 	{#if error}
 		<div class="border-l-4 border-red-500 bg-red-100 p-4 text-red-700" role="alert">
-			<p class="font-medium">Hata oluştu</p>
+			<p class="font-medium">An error has occurred.</p>
 			<p>{error}</p>
 			<button class="mt-2 text-red-600 underline" onclick={() => loadLocations()}>
-				Tekrar dene
+				Try again.
 			</button>
 		</div>
 	{/if}

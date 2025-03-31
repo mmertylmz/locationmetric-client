@@ -38,4 +38,8 @@ export const locationsAPI = {
         const queryString = queryParams.toString();
         return fetchAPI(`/api/v1/locations/${queryString ? `?${queryString}` : ''}`);
     },
+
+    getLocationCounts: async (params = {}) => {
+        return fetchAPI('/api/v1/locations/counts');
+    }
 }
