@@ -73,9 +73,19 @@
 		})
 	);
 
-	// TODO: View Details Function (modal planned)
+	//Modal State
+	let selectedAction = $state(null);
+	let showModal = $state(false);
+	let selectedLocation = $state(null);
+
 	function viewDetails(location) {
-		console.log('View Details');
+		selectedLocation = location;
+		showModal = true;
+	}
+
+	function closeModal() {
+		showModal = false;
+		selectedLocation = null;
 	}
 
 	// Load locations data
@@ -169,191 +179,134 @@
 	{:else}
 		<!-- Locations Table -->
 		<div class="relative rounded-lg bg-white shadow">
-			<div class="overflow-x-auto max-w-full" >
-			<table class="w-full divide-y divide-gray-200">
-				<thead class="bg-gray-50">
-					<tr>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							Name
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							Sector
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							State
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							Country
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							Average Rating
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							Reviews Count
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							Photos Count
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							5 Star Count
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							4 Star Count
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							3 Star Count
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							2 Star Count
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
-							1 Star Count
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
-							Verified
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
-							Link
-						</th>
-						<th
-							scope="col"
-							class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
-							View Details
-						</th>
-					</tr>
-				</thead>
-				<tbody class="divide-y divide-gray-200 bg-white">
-					{#each filteredLocations as location}
+			<div class="max-w-full overflow-x-auto">
+				<table class="w-full divide-y divide-gray-200">
+					<thead class="bg-gray-50">
 						<tr>
-							<td class="px-6 py-4 whitespace-nowrap">
-								<div class="font-medium text-gray-900">{location.Name || 'Unnamed Location'}</div>
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.Type || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.State || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.Country || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.latest_metric.Rating || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.latest_metric.Reviews || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.latest_metric.PhotosCount || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.latest_metric.ReviewsPerScore5 || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.latest_metric.ReviewsPerScore4 || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.latest_metric.ReviewsPerScore3 || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.latest_metric.ReviewsPerScore2 || '-'}
-							</td>
-							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
-								{location.latest_metric.ReviewsPerScore1 || '-'}
-							</td>
-							<td class="px-6 py-4 text-center whitespace-nowrap">
-								<span
-									class="inline-flex rounded-full px-2 text-xs leading-5 font-semibold
+							<th
+								scope="col"
+								class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+								Name
+							</th>
+							<th
+								scope="col"
+								class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+								Sector
+							</th>
+							<th
+								scope="col"
+								class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+								State
+							</th>
+							<th
+								scope="col"
+								class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+								Country
+							</th>
+							<th
+								scope="col"
+								class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+								Average Rating
+							</th>
+							<th
+								scope="col"
+								class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
+								Verified
+							</th>
+							<th
+								scope="col"
+								class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
+								Link
+							</th>
+							<th
+								scope="col"
+								class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
+								View Details
+							</th>
+						</tr>
+					</thead>
+					<tbody class="divide-y divide-gray-200 bg-white">
+						{#each filteredLocations as location}
+							<tr>
+								<td class="px-6 py-4 whitespace-nowrap">
+									<div class="font-medium text-gray-900">{location.Name || 'Unnamed Location'}</div>
+								</td>
+								<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+									{location.Type || '-'}
+								</td>
+								<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+									{location.State || '-'}
+								</td>
+								<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+									{location.Country || '-'}
+								</td>
+								<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+									{location.latest_metric.Rating || '-'}
+								</td>
+								<td class="px-6 py-4 text-center whitespace-nowrap">
+									<span
+										class="inline-flex rounded-full px-2 text-xs leading-5 font-semibold
                   {location.Verified ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
-									{location.Verified ? 'Active' : 'Inactive'}
-								</span>
-							</td>
-							<td class="px-6 py-4 text-center whitespace-nowrap text-gray-500">
-								{#if location.LocationLink}
-									<a
-										href={location.LocationLink}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-gray-800 hover:text-blue-700"
-										aria-label="Location Link">
+										{location.Verified ? 'Active' : 'Inactive'}
+									</span>
+								</td>
+								<td class="px-6 py-4 text-center whitespace-nowrap text-gray-500">
+									{#if location.LocationLink}
+										<a
+											href={location.LocationLink}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="text-gray-800 hover:text-blue-700"
+											aria-label="Location Link">
+											<svg
+												xmlns="http://www.w3.org/2000/svg"
+												class="inline-block h-5 w-5"
+												viewBox="0 0 384 512"
+												fill="currentColor">
+												<path
+													d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+											</svg>
+										</a>
+									{:else}
+										<span class="text-gray-400">-</span>
+									{/if}
+								</td>
+								<td class="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
+									<button
+										class="rounded-full p-1.5 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-700"
+										aria-label="View details"
+										onclick={() => viewDetails(location)}>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
-											class="inline-block h-5 w-5"
-											viewBox="0 0 384 512"
-											fill="currentColor">
-											<!-- Font Awesome Map Marker Icon -->
-											<path
-												d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z" />
+											class="h-5 w-5"
+											viewBox="0 0 24 24"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="2"
+											stroke-linecap="round"
+											stroke-linejoin="round">
+											<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+											<circle cx="12" cy="12" r="3"></circle>
 										</svg>
-									</a>
-								{:else}
-									<span class="text-gray-400">-</span>
-								{/if}
-							</td>
-							<td class="px-6 py-4 text-center text-sm font-medium whitespace-nowrap">
-								<button
-									class="rounded-full p-1.5 text-gray-600 transition-colors hover:bg-blue-100 hover:text-blue-700"
-									aria-label="View details"
-									onclick={() => viewDetails(location)}>
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										class="h-5 w-5"
-										viewBox="0 0 24 24"
-										fill="none"
-										stroke="currentColor"
-										stroke-width="2"
-										stroke-linecap="round"
-										stroke-linejoin="round">
-										<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-										<circle cx="12" cy="12" r="3"></circle>
-									</svg>
-								</button>
-							</td>
-						</tr>
-					{/each}
+									</button>
+								</td>
+							</tr>
+						{/each}
 
-					{#if filteredLocations.length === 0}
-						<tr>
-							<td colspan="5" class="px-6 py-8 text-center text-gray-500">
-								{#if searchTerm}
-									No locations found matching "{searchTerm}".
-								{:else}
-									No locations found.
-								{/if}
-							</td>
-						</tr>
-					{/if}
-				</tbody>
-			</table>
-		</div>
+						{#if filteredLocations.length === 0}
+							<tr>
+								<td colspan="5" class="px-6 py-8 text-center text-gray-500">
+									{#if searchTerm}
+										No locations found matching "{searchTerm}".
+									{:else}
+										No locations found.
+									{/if}
+								</td>
+							</tr>
+						{/if}
+					</tbody>
+				</table>
+			</div>
 		</div>
 		<!-- Pagination -->
 		{#if totalItems > pageSize}
@@ -365,7 +318,7 @@
 							: 'hover:bg-gray-50'}"
 						disabled={currentPage === 1}
 						onclick={() => changePage(currentPage - 1)}>
-						&laquo; Önceki
+						&laquo; Previous
 					</button>
 
 					{#each Array(Math.ceil(totalItems / pageSize)) as _, index}
@@ -384,10 +337,154 @@
 							: 'hover:bg-gray-50'}"
 						disabled={currentPage >= Math.ceil(totalItems / pageSize)}
 						onclick={() => changePage(currentPage + 1)}>
-						Sonraki &raquo;
+						Next &raquo;
 					</button>
 				</nav>
 			</div>
 		{/if}
 	{/if}
 </div>
+
+<!-- Modal for location details -->
+{#if showModal && selectedLocation}
+	<div
+		class="fixed inset-0 z-50 overflow-y-auto"
+		aria-labelledby="modal-title"
+		role="dialog"
+		aria-modal="true">
+		<div
+			class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+			<!-- Background overlay -->
+			<div
+				class="bg-opacity-75 fixed inset-0 bg-gray-500 transition-opacity"
+				aria-hidden="true"
+				onclick={closeModal}>
+			</div>
+
+			<!-- Modal panel -->
+			<div
+				class="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:align-middle">
+				<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+					<div class="sm:flex sm:items-start">
+						<div class="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
+							<h3 class="mb-4 text-lg leading-6 font-medium text-gray-900" id="modal-title">
+								{selectedLocation.Name || 'Location Details'}
+							</h3>
+
+							<!-- Tabs for organizing details -->
+							<div class="mb-4 border-b border-gray-200">
+								<nav class="-mb-px flex" aria-label="Tabs"></nav>
+							</div>
+
+							<!-- Modal content with details table -->
+							<div class="overflow-x-auto">
+								<table class="min-w-full divide-y divide-gray-200">
+									<thead class="bg-gray-50">
+										<tr>
+											<th
+												scope="col"
+												class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+												Metric
+											</th>
+											<th
+												scope="col"
+												class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+												Value
+											</th>
+										</tr>
+									</thead>
+									<tbody class="divide-y divide-gray-200 bg-white">
+										<!-- Location Info-->
+										<tr>
+											<td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+												Info
+											</td>
+											<td class="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+												<div>
+													<b>Name:</b>
+													{selectedLocation.Name || '-'}
+												</div>
+												<div>
+													<b>Sector:</b>
+													{selectedLocation.Type || '-'}
+												</div>
+												<div>
+													<b>State:</b>
+													{selectedLocation.State || '-'}
+												</div>
+												<div>
+													<b>Country:</b>
+													{selectedLocation.Country || '-'}
+												</div>
+											</td>
+										</tr>
+
+										<!-- Rating Stats -->
+										<tr>
+											<td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+												Rating Stats
+											</td>
+											<td class="px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+												<div>
+													<b>Average Rating:</b>
+													{selectedLocation.latest_metric.Rating || '-'}
+												</div>
+												<div>
+													<b>Reviews Count:</b>
+													{selectedLocation.latest_metric.Reviews || '-'}
+												</div>
+												<div>
+													<b>Photos Count:</b>
+													{selectedLocation.latest_metric.PhotosCount || '-'}
+												</div>
+											</td>
+										</tr>
+
+										<!-- Reviews by Star -->
+										<tr>
+											<td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
+												Reviews by Star
+											</td>
+											<td class="px-6 py-4 text-sm whitespace-normal text-gray-500">
+												<div class="grid grid-cols-5 gap-2">
+													<div>
+														<b>5★:</b>
+														{selectedLocation.latest_metric.ReviewsPerScore5 || '-'}
+													</div>
+													<div>
+														<b>4★:</b>
+														{selectedLocation.latest_metric.ReviewsPerScore4 || '-'}
+													</div>
+													<div>
+														<b>3★:</b>
+														{selectedLocation.latest_metric.ReviewsPerScore3 || '-'}
+													</div>
+													<div>
+														<b>2★:</b>
+														{selectedLocation.latest_metric.ReviewsPerScore2 || '-'}
+													</div>
+													<div>
+														<b>1★:</b>
+														{selectedLocation.latest_metric.ReviewsPerScore1 || '-'}
+													</div>
+												</div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+					<button
+						type="button"
+						class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-none sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+						onclick={closeModal}>
+						Close
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{/if}
