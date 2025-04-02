@@ -169,7 +169,8 @@
 	{:else}
 		<!-- Locations Table -->
 		<div class="relative rounded-lg bg-white shadow">
-			<table class="min-w-full divide-y divide-gray-200">
+			<div class="overflow-x-auto max-w-full" >
+			<table class="w-full divide-y divide-gray-200">
 				<thead class="bg-gray-50">
 					<tr>
 						<th
@@ -352,6 +353,7 @@
 					{/if}
 				</tbody>
 			</table>
+		</div>
 		</div>
 		<!-- Pagination -->
 		{#if totalItems > pageSize}

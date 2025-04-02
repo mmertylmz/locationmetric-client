@@ -11,7 +11,7 @@
 	<Sidebar />
 	
 	<!-- Main Content Area -->
-	<div class="flex-1 ml-64 flex flex-col">
+	<div class="flex-1 ml-64 flex flex-col overflow-hidden">
 	  <Header />
 	  <main class="flex-1 p-6">
 		{@render children()}
