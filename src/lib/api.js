@@ -27,7 +27,7 @@ async function fetchAPI(endpoint, options = {}) {
 }
 
 export const locationsAPI = {
-    getLocations: async (params = {}) => {
+    getLocationsWithMetrics: async (params = {}) => {
         const queryParams = new URLSearchParams();
         if (params.skip) queryParams.append('skip', params.skip);
         if (params.limit) queryParams.append('limit', params.limit);
@@ -36,7 +36,7 @@ export const locationsAPI = {
         if (params.state) queryParams.append('state', params.state);
 
         const queryString = queryParams.toString();
-        return fetchAPI(`/api/v1/locations/${queryString ? `?${queryString}` : ''}`);
+        return fetchAPI(`/api/v1/locations/with-metrics/${queryString ? `?${queryString}` : ''}`);
     },
 
     getLocationCounts: async (params = {}) => {

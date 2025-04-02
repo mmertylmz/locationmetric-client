@@ -28,7 +28,7 @@
 				params.Name = searchTerm;
 			}
 
-			const data = await locationsAPI.getLocations(params);
+			const data = await locationsAPI.getLocationsWithMetrics(params);
 
 			locations = data.items || data;
 			totalItems = data.total || locations.length;
@@ -61,17 +61,14 @@
 
 	let filteredLocations = $derived(
 		locations.filter((loc) => {
-			// Status filtresi kontrolü
 			const statusFilter = filterStatus === 'all' || loc.Verified === filterStatus;
 
-			// Arama filtresi kontrolü (eğer arama kutusu varsa)
 			const searchFilter =
 				!searchTerm ||
 				(loc.Name && loc.Name.toLowerCase().includes(searchTerm.toLowerCase())) ||
 				(loc.Country && loc.Country.toLowerCase().includes(searchTerm.toLowerCase())) ||
 				(loc.State && loc.State.toLowerCase().includes(searchTerm.toLowerCase()));
 
-			// Her iki filtreyi de uygula
 			return statusFilter && searchFilter;
 		})
 	);
@@ -171,7 +168,7 @@
 		</div>
 	{:else}
 		<!-- Locations Table -->
-		<div class="overflow-hidden rounded-lg bg-white shadow">
+		<div class="relative rounded-lg bg-white shadow">
 			<table class="min-w-full divide-y divide-gray-200">
 				<thead class="bg-gray-50">
 					<tr>
@@ -195,7 +192,46 @@
 							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
 							Country
 						</th>
-
+						<th
+							scope="col"
+							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+							Average Rating
+						</th>
+						<th
+							scope="col"
+							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+							Reviews Count
+						</th>
+						<th
+							scope="col"
+							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+							Photos Count
+						</th>
+						<th
+							scope="col"
+							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+							5 Star Count
+						</th>
+						<th
+							scope="col"
+							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+							4 Star Count
+						</th>
+						<th
+							scope="col"
+							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+							3 Star Count
+						</th>
+						<th
+							scope="col"
+							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+							2 Star Count
+						</th>
+						<th
+							scope="col"
+							class="px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+							1 Star Count
+						</th>
 						<th
 							scope="col"
 							class="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
@@ -227,6 +263,30 @@
 							</td>
 							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
 								{location.Country || '-'}
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+								{location.latest_metric.Rating || '-'}
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+								{location.latest_metric.Reviews || '-'}
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+								{location.latest_metric.PhotosCount || '-'}
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+								{location.latest_metric.ReviewsPerScore5 || '-'}
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+								{location.latest_metric.ReviewsPerScore4 || '-'}
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+								{location.latest_metric.ReviewsPerScore3 || '-'}
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+								{location.latest_metric.ReviewsPerScore2 || '-'}
+							</td>
+							<td class="px-6 py-4 whitespace-nowrap text-gray-500">
+								{location.latest_metric.ReviewsPerScore1 || '-'}
 							</td>
 							<td class="px-6 py-4 text-center whitespace-nowrap">
 								<span
