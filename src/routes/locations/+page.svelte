@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte';
 	import { locationsAPI } from '$lib/api';
+	import { fade, fly } from 'svelte/transition';
 
 	// Svelte 5 state with proper runes syntax
 	let isLoading = $state(true);
@@ -351,7 +352,8 @@
 		class="fixed inset-0 z-50 overflow-y-auto"
 		aria-labelledby="modal-title"
 		role="dialog"
-		aria-modal="true">
+		aria-modal="true"
+		transition:fade={{ duration: 350}}>
 		<div
 			class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
 			<!-- Background overlay -->
@@ -363,7 +365,8 @@
 
 			<!-- Modal panel -->
 			<div
-				class="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:align-middle">
+				class="inline-block transform overflow-hidden rounded-lg bg-white text-left align-bottom shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:align-middle"
+				transition:fly={{ y:100, duration: 350}}>
 				<div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
 					<div class="sm:flex sm:items-start">
 						<div class="mt-3 w-full text-center sm:mt-0 sm:ml-4 sm:text-left">
